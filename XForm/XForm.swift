@@ -69,24 +69,13 @@ struct XSection <Label, Content>: View where Label: View, Content: View {
                 Group(subviewsOf: content) { subviews in
                     Group(subviewsOf: content) { subviews in
                         ForEach(subviews) { subview in
-                            if let label = subview.containerValues.xFieldLabel {
-                                HStack(alignment: .firstTextBaseline) {
-                                    HStack {
-                                        Spacer()
-                                        label()
-                                    }
-                                    .frame(width: 120)
-                                    subview
-                                }
-                            }
-                            else {
-                                subview
-                            }
+                            subview
                         }
                     }
                 }
             }
         }
+        .labeledContentStyle(XSectionLabeledContentStyle())
         .xFormDepth(value: self.depth ?? 0 + 1)
     }
 }
@@ -101,29 +90,33 @@ extension XSection where Label == Text {
 
 // MARK: -
 
-struct XFieldLabelContainerValueKey: ContainerValueKey {
-    static let defaultValue: (@Sendable () -> AnyView)? = nil
-}
-
-extension ContainerValues {
-    var xFieldLabel: (@Sendable () -> AnyView)? {
-        get { self[XFieldLabelContainerValueKey.self] }
-        set { self[XFieldLabelContainerValueKey.self] = newValue }
+private struct XSectionLabeledContentStyle: LabeledContentStyle {
+    func makeBody(configuration: Configuration) -> some View {
+        HStack(alignment: .firstTextBaseline) {
+            HStack {
+                Spacer()
+                configuration.label
+            }
+            .frame(width: 120)
+            configuration.content
+        }
     }
 }
 
 extension View {
-    func fieldTitle(_ title: String) -> some View {
-        labelsHidden()
-        .containerValue(\.xFieldLabel) {
-            AnyView(Text(title))
+    func labeled(_ label: LocalizedStringKey) -> LabeledContent<Text, Self> {
+        LabeledContent {
+            self
+        } label: {
+            Text(label)
         }
     }
 
-    func fieldLabel(_ label: @Sendable @escaping () -> some View) -> some View {
-        labelsHidden()
-        .containerValue(\.xFieldLabel) {
-            AnyView(label())
+    func labeled<Label: View>(@ViewBuilder _ label: () -> Label) -> LabeledContent<Label, Self> {
+        LabeledContent {
+            self
+        } label: {
+            label()
         }
     }
 }

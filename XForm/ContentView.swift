@@ -13,27 +13,27 @@ struct ContentView: View {
                 XSection("Transform") {
                     XSection("Scale") {
                         TextField("x", value: .constant(0), format: .number)
-                            .fieldTitle("X")
+                            .labeled("X")
                         TextField("y", value: .constant(0), format: .number)
-                            .fieldTitle("X")
+                            .labeled("X")
                         TextField("z", value: .constant(0), format: .number)
-                            .fieldTitle("Y")
+                            .labeled("Y")
                     }
                     XSection("Rotation") {
                         TextField("x", value: .constant(0), format: .number)
-                            .fieldTitle("X")
+                            .labeled("X")
                         TextField("y", value: .constant(0), format: .number)
-                            .fieldTitle("X")
+                            .labeled("X")
                         TextField("z", value: .constant(0), format: .number)
-                            .fieldTitle("Y")
+                            .labeled("Y")
                     }
                     XSection("Translation") {
                         TextField("x", value: .constant(0), format: .number)
-                            .fieldTitle("X")
+                            .labeled("X")
                         TextField("y", value: .constant(0), format: .number)
-                            .fieldTitle("X")
+                            .labeled("X")
                         TextField("z", value: .constant(0), format: .number)
-                            .fieldTitle("Y")
+                            .labeled("Y")
                     }
 
                     XSection("Testing") {
@@ -44,17 +44,17 @@ struct ContentView: View {
 
                 XSection("Identity and Type") {
                     TextField("Name", text: $name)
-                        .fieldTitle("Name")
+                        .labeled("Name")
                     TextField("Type", text: .constant("blah blah"))
-                        .fieldTitle("Type")
+                        .labeled("Type")
                     TextField("Location", text: .constant("blah blah"))
-                        .fieldTitle("location")
+                        .labeled("location")
                     HStack {
                         Text("ContentView.swift")
                         Spacer()
                         Image(systemName: "folder.fill")
                     }
-                    .fieldLabel {
+                    .labeled {
                         Spacer()
                     }
                 }
@@ -71,16 +71,16 @@ struct ContentView: View {
                     Picker("Text Encoding", selection: .constant("utf8")) {
                         Text("utf8").tag("utf8")
                     }
-                    .fieldTitle("Text Encoding")
+                    .labeled("Text Encoding")
                     Picker("Line Endings", selection: .constant("LF")) {
                         Text("LF").tag("LF")
                     }
-                    .fieldTitle("Line Endings")
+                    .labeled("Line Endings")
                     Divider()
                     Picker("Indent Using", selection: .constant("Spaces")) {
                         Text("Spaces").tag("Spaces")
                     }
-                    .fieldTitle("Indent Using")
+                    .labeled("Indent Using")
                 }
             }
             .controlSize(.mini)
